@@ -9,11 +9,17 @@ app.get('/',(req,res)=>{
         console.log(response.statusCode)
         response.on('data',(data)=>{
             const weatherData=JSON.parse(data)
-            const temp=weatherData.weather[0]
-            console.log(temp)
+            const temp=weatherData.main.temp
+            const weatherDEscription=weatherData.weather[0].description
+            const icon=weatherData.weather[0]['icon']
+            const url=`http://openweathermap.org/img/wn/${icon}@2x.png`
+            res.write('<p>The weather is currently '+weatherDEscription+'</p>')
+            res.write('<h1>The temperature in London is  '+ temp+' degrees Celcius</h1>')
+            res.write("<img src="+url+">")
+            res.send()
         })
     })
-    res.send('server is up and running')
+  
 })
 
 
