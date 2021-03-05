@@ -1,3 +1,4 @@
+const { json } = require('express');
 const express=require('express');
 const app=express()
 const https=require('https')
@@ -7,8 +8,9 @@ app.get('/',(req,res)=>{
     https.get(url,(response)=>{
         console.log(response.statusCode)
         response.on('data',(data)=>{
-            const weather=JSON.parse(data)
-            console.log(weather)
+            const weatherData=JSON.parse(data)
+            const temp=weatherData.weather[0]
+            console.log(temp)
         })
     })
     res.send('server is up and running')
